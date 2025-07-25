@@ -67,13 +67,13 @@ st.markdown(
     """
     <style>
     .title {
-        color: #4B8BBE;
+        color: white;
         font-weight: 700;
         font-size: 2.8rem;
         margin-bottom: 0.3rem;
     }
     .subtitle {
-        color: #306998;
+        color: white;
         font-weight: 600;
         margin-bottom: 1rem;
     }
@@ -104,7 +104,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.markdown('<div class="title">🧠 Gemini AI Research Assistant</div>', unsafe_allow_html=True)
+st.markdown('<div class="title">🧠AI Research Assistant</div>', unsafe_allow_html=True)
 st.markdown('<div class="subtitle">Ask your research question and get a structured summary.</div>', unsafe_allow_html=True)
 
 query = st.text_input("🔎 Enter your research query:")
@@ -162,4 +162,19 @@ if "latest_response" in st.session_state:
             mime="application/pdf"
         )
 
-st.markdown('<div class="footer">Made with ❤️ using Google Gemini API and Streamlit</div>', unsafe_allow_html=True)
+st.warning(
+    """
+    ⚠️ **Important Notice:**  
+    This demo uses a limited API key for testing purposes only.  
+    Please **do not generate excessive queries** to avoid hitting usage limits.  
+
+    For better and unlimited access,  
+    you can download the source code,  
+    get your own API key from **Google Gemini**,  
+    and update the `.env` file to enjoy full features for free!  
+
+    Thank you for understanding! 🙏
+    """
+)
+
+st.markdown('<div class="footer">Made by pulindu seniya using Google Gemini API and Streamlit</div>', unsafe_allow_html=True)
