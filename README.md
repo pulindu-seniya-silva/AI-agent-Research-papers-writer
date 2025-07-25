@@ -38,5 +38,9 @@ Google’s Gemini API is part of their **Generative AI services** and requires a
 > For improved and more stable access, you can **purchase or subscribe to a paid plan** through Google Cloud’s pricing and billing options.  
 > Having a valid Gemini API key in your `.env` will enable your AI agent to perform better and access more features.
 
+<img src="images/first.png" width="800" alt="image 1" />
+<img src="images/second.png" width="800" alt="image 1" />
+<img src="images/pdf.png" width="800" alt="image 1" />
+
 ---
 
