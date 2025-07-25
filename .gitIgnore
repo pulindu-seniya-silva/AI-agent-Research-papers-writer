@@ -1,0 +1,108 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environments
+.env/
+.venv/
+env/
+venv/
+ENV/
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints
+
+# VS Code settings
+.vscode/
+
+# PyCharm settings
+.idea/
+
+# Python egg files
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+sdist/
+develop-eggs/
+.installed.cfg
+
+# pip logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+coverage.xml
+*.cover
+.cache
+nosetests.xml
+test_*.log
+pytest_cache/
+
+# Pyre type checker
+.pyre/
+
+# Pytype
+.pytype/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# DVC (if used for data versioning)
+.dvc/
+
+# Local data / model outputs
+data/
+datasets/
+logs/
+models/
+checkpoints/
+runs/
+output/
+results/
+*.log
+*.pkl
+*.pt
+*.h5
+*.ckpt
+
+# Secrets or API keys (manually ensure they’re not tracked)
+*.env
+.env.*
+secrets.*
+*.key
+*.pem
+*.crt
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Mac OS
+.AppleDouble
+.LSOverride
+
+# Spyder IDE
+.spyderproject
+.spyproject
+
+# Jupyter nbconvert
+__results__/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
