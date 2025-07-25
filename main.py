@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from typing import List
 from langchain.output_parsers import PydanticOutputParser
 from tools import search_tool, wiki_tool
+from datetime import datetime
 
 # Load environment variable
 load_dotenv()
@@ -50,7 +51,8 @@ try:
 
         def save_to_file(data: ResearchResponse):
             root_dir = pathlib.Path(__file__).parent.resolve()
-            filename = root_dir / f"{data.topic.replace(' ', '_')}_research.txt"
+            timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")  # <-- added this
+            filename = root_dir / f"{data.topic.replace(' ', '_')}_research_{timestamp}.txt"  # <-- only this line changed
             with open(filename, "w", encoding="utf-8") as f:
                 f.write(f"📘 Topic: {data.topic}\n\n")
                 f.write(f"📄 Summary:\n{data.summary}\n\n")
