@@ -7,6 +7,7 @@ from typing import List
 from langchain.output_parsers import PydanticOutputParser
 import pathlib
 from datetime import datetime
+from fpdf import FPDF
 
 # Load API key
 load_dotenv()
@@ -33,6 +34,33 @@ def save_to_file(data: ResearchResponse):
         f.write(f"📚 Sources:\n" + "\n".join(data.sources) + "\n\n")
         f.write(f"🛠 Tools Used:\n" + ", ".join(data.tools_used))
     st.success(f"✅ Saved to file: {filename}")
+
+def create_pdf(data: ResearchResponse) -> bytes:
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", "B", 16)
+    pdf.cell(0, 10, f"Topic: {data.topic}", ln=True)
+    pdf.ln(10)
+
+    pdf.set_font("Arial", "", 12)
+    pdf.multi_cell(0, 10, f"Summary:\n{data.summary}")
+    pdf.ln(10)
+
+    pdf.set_font("Arial", "B", 12)
+    pdf.cell(0, 10, "Sources:", ln=True)
+    pdf.set_font("Arial", "", 12)
+    for src in data.sources:
+        pdf.multi_cell(0, 8, f"- {src}")
+    pdf.ln(5)
+
+    pdf.set_font("Arial", "B", 12)
+    pdf.cell(0, 10, "Tools Used:", ln=True)
+    pdf.set_font("Arial", "", 12)
+    tools_str = ", ".join(data.tools_used) if data.tools_used else "None"
+    pdf.multi_cell(0, 10, tools_str)
+
+    pdf_output = pdf.output(dest='S').encode('latin1')
+    return pdf_output
 
 # Custom CSS for colors and styling
 st.markdown(
@@ -63,6 +91,7 @@ st.markdown(
         background-color: #f0f4f8;
         padding: 1rem 1.2rem;
         border-radius: 8px;
+        white-space: pre-wrap;
     }
     .footer {
         font-size: 0.9rem;
@@ -109,11 +138,28 @@ if st.button("Generate Research Paper") and query:
             with st.expander(f"🛠 Tools Used ({len(structured_response.tools_used)})"):
                 st.write(", ".join(structured_response.tools_used) if structured_response.tools_used else "None")
 
-            if st.button("💾 Save to File"):
-                save_to_file(structured_response)
+            # Store in session state for later buttons
+            st.session_state["latest_response"] = structured_response
 
         except Exception as e:
             st.error(f"Error parsing response: {e}")
             st.text_area("Raw output", raw_output)
+
+if "latest_response" in st.session_state:
+    sr = st.session_state["latest_response"]
+    col1, col2 = st.columns(2)
+
+    with col1:
+        if st.button("💾 Save to Text File"):
+            save_to_file(sr)
+
+    with col2:
+        pdf_bytes = create_pdf(sr)
+        st.download_button(
+            label="📄 Download as PDF",
+            data=pdf_bytes,
+            file_name=f"{sr.topic.replace(' ', '_')}_research_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf",
+            mime="application/pdf"
+        )
 
 st.markdown('<div class="footer">Made with ❤️ using Google Gemini API and Streamlit</div>', unsafe_allow_html=True)
