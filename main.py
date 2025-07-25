@@ -1,3 +1,4 @@
+import pathlib
 from dotenv import load_dotenv
 import os
 import google.generativeai as genai
@@ -44,11 +45,12 @@ try:
     structured_response = parser.parse(raw_output)
     print("✅ Structured Response:\n", structured_response)
 
-    # Ask user if they want to save it
     save_input = input("💾 Do you want to save this to a file? (yes/no): ").strip().lower()
     if "yes" in save_input or "save" in save_input:
+
         def save_to_file(data: ResearchResponse):
-            filename = f"{data.topic.replace(' ', '_')}_research.txt"
+            root_dir = pathlib.Path(__file__).parent.resolve()
+            filename = root_dir / f"{data.topic.replace(' ', '_')}_research.txt"
             with open(filename, "w", encoding="utf-8") as f:
                 f.write(f"📘 Topic: {data.topic}\n\n")
                 f.write(f"📄 Summary:\n{data.summary}\n\n")
