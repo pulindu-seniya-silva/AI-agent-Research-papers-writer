@@ -6,7 +6,6 @@ from datetime import datetime
 search = DuckDuckGoSearchRun()
 search_tool = Tool(
     name="search",
-    dunc=search.run,
+    func=search.run,
     description="Search the web for information",
-    
 )
