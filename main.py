@@ -1,18 +1,17 @@
 from dotenv import load_dotenv
-from pydantic import BaseModel
-from langchain_openai import ChatOpenAI
-from langchain_anthropic import ChatAnthropic
+import os
+import google.generativeai as genai
 
+# Load API key from .env
 load_dotenv()
+api_key = os.getenv("GEMINI_API_KEY")
 
-llm = ChatAnthropic(model="claude-3-5-sonnet-20240620")
-response = llm.invoke("What is the meaning of life?")
+# Configure Gemini
+genai.configure(api_key=api_key)
 
-print(response)
+# Initialize the model
+model = genai.GenerativeModel("gemini-1.5-flash")
 
-
-
-
-
-
-
+# Make a call
+response = model.generate_content("What is the meaning of life?")
+print(response.text)
